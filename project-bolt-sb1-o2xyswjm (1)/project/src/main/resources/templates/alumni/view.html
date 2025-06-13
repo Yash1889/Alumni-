@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" 
+      th:replace="~{layout :: layout(~{::main}, pageTitle='Alumni Details')}">
+<body>
+    <main>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">
+                            <i class="fas fa-user me-2"></i>Alumni Details
+                        </h4>
+                        <div>
+                            <a th:href="@{'/alumni/edit/' + ${alumni.id}}" class="btn btn-warning btn-sm">
+                                <i class="fas fa-edit me-1"></i>Edit
+                            </a>
+                            <a href="/alumni" class="btn btn-secondary btn-sm">
+                                <i class="fas fa-arrow-left me-1"></i>Back to List
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">
+                                        <i class="fas fa-hashtag me-1"></i>ID
+                                    </label>
+                                    <p class="form-control-plaintext" th:text="${alumni.id}">1</p>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">
+                                        <i class="fas fa-user me-1"></i>Name
+                                    </label>
+                                    <p class="form-control-plaintext" th:text="${alumni.name}">John Doe</p>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">
+                                        <i class="fas fa-calendar me-1"></i>Batch Year
+                                    </label>
+                                    <p class="form-control-plaintext">
+                                        <span class="badge bg-info fs-6" th:text="${alumni.batch}">2020</span>
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">
+                                        <i class="fas fa-building me-1"></i>Company
+                                    </label>
+                                    <p class="form-control-plaintext" th:text="${alumni.company}">Tech Corp</p>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">
+                                        <i class="fas fa-envelope me-1"></i>Contact Email
+                                    </label>
+                                    <p class="form-control-plaintext">
+                                        <a th:href="'mailto:' + ${alumni.contact}" 
+                                           th:text="${alumni.contact}" 
+                                           class="text-decoration-none">john@example.com</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <hr>
+                        
+                        <div class="d-flex justify-content-end gap-2">
+                            <a th:href="@{'/alumni/edit/' + ${alumni.id}}" class="btn btn-warning">
+                                <i class="fas fa-edit me-1"></i>Edit Alumni
+                            </a>
+                            <a th:href="@{'/alumni/delete/' + ${alumni.id}}" 
+                               class="btn btn-danger"
+                               onclick="return confirm('Are you sure you want to delete this alumni?')">
+                                <i class="fas fa-trash me-1"></i>Delete Alumni
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

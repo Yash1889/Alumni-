@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" 
+      th:replace="~{layout :: layout(~{::main}, pageTitle=${alumni.id != null ? 'Edit Alumni' : 'Add Alumni'})}">
+<body>
+    <main>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mb-0">
+                            <i th:class="${alumni.id != null ? 'fas fa-edit' : 'fas fa-plus'} me-2"></i>
+                            <span th:text="${alumni.id != null ? 'Edit Alumni' : 'Add New Alumni'}">Add Alumni</span>
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/alumni/save}" method="post" th:object="${alumni}">
+                            <input type="hidden" th:field="*{id}">
+                            
+                            <div class="mb-3">
+                                <label for="name" class="form-label">
+                                    <i class="fas fa-user me-1"></i>Full Name *
+                                </label>
+                                <input type="text" class="form-control" 
+                                       th:field="*{name}" 
+                                       th:class="${#fields.hasErrors('name')} ? 'form-control is-invalid' : 'form-control'"
+                                       placeholder="Enter full name">
+                                <div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
+                                    <i class="fas fa-exclamation-circle me-1"></i>
+                                    <span th:errors="*{name}">Name error</span>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="batch" class="form-label">
+                                    <i class="fas fa-calendar me-1"></i>Batch Year *
+                                </label>
+                                <input type="number" class="form-control" 
+                                       th:field="*{batch}" 
+                                       th:class="${#fields.hasErrors('batch')} ? 'form-control is-invalid' : 'form-control'"
+                                       placeholder="e.g., 2020" min="1980" max="2030">
+                                <div th:if="${#fields.hasErrors('batch')}" class="invalid-feedback">
+                                    <i class="fas fa-exclamation-circle me-1"></i>
+                                    <span th:errors="*{batch}">Batch error</span>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="company" class="form-label">
+                                    <i class="fas fa-building me-1"></i>Company *
+                                </label>
+                                <input type="text" class="form-control" 
+                                       th:field="*{company}" 
+                                       th:class="${#fields.hasErrors('company')} ? 'form-control is-invalid' : 'form-control'"
+                                       placeholder="Enter company name">
+                                <div th:if="${#fields.hasErrors('company')}" class="invalid-feedback">
+                                    <i class="fas fa-exclamation-circle me-1"></i>
+                                    <span th:errors="*{company}">Company error</span>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="contact" class="form-label">
+                                    <i class="fas fa-envelope me-1"></i>Email Contact *
+                                </label>
+                                <input type="email" class="form-control" 
+                                       th:field="*{contact}" 
+                                       th:class="${#fields.hasErrors('contact')} ? 'form-control is-invalid' : 'form-control'"
+                                       placeholder="Enter email address">
+                                <div th:if="${#fields.hasErrors('contact')}" class="invalid-feedback">
+                                    <i class="fas fa-exclamation-circle me-1"></i>
+                                    <span th:errors="*{contact}">Contact error</span>
+                                </div>
+                            </div>
+
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <a href="/alumni" class="btn btn-secondary me-md-2">
+                                    <i class="fas fa-times me-1"></i>Cancel
+                                </a>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-1"></i>
+                                    <span th:text="${alumni.id != null ? 'Update Alumni' : 'Add Alumni'}">Save</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

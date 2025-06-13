@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" 
+      th:replace="~{layout :: layout(~{::main}, pageTitle='Alumni List')}">
+<body>
+    <main>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>
+                <i class="fas fa-users me-2"></i>
+                <span th:if="${year}" th:text="'Alumni - Batch ' + ${year}">Alumni - Batch Year</span>
+                <span th:unless="${year}">All Alumni</span>
+            </h2>
+            <a href="/alumni/new" class="btn btn-primary">
+                <i class="fas fa-plus me-1"></i>Add New Alumni
+            </a>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div th:if="${#lists.isEmpty(alumni)}" class="text-center py-5">
+                    <i class="fas fa-user-slash fa-3x text-muted mb-3"></i>
+                    <h5 class="text-muted">No alumni found</h5>
+                    <p class="text-muted">
+                        <span th:if="${year}" th:text="'No alumni found for batch ' + ${year}"></span>
+                        <span th:unless="${year}">Start by adding your first alumni member</span>
+                    </p>
+                    <a href="/alumni/new" class="btn btn-primary">
+                        <i class="fas fa-plus me-1"></i>Add Alumni
+                    </a>
+                </div>
+
+                <div th:unless="${#lists.isEmpty(alumni)}">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th><i class="fas fa-hashtag me-1"></i>ID</th>
+                                    <th><i class="fas fa-user me-1"></i>Name</th>
+                                    <th><i class="fas fa-calendar me-1"></i>Batch</th>
+                                    <th><i class="fas fa-building me-1"></i>Company</th>
+                                    <th><i class="fas fa-envelope me-1"></i>Contact</th>
+                                    <th><i class="fas fa-cogs me-1"></i>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="alumni : ${alumni}">
+                                    <td th:text="${alumni.id}">1</td>
+                                    <td>
+                                        <strong th:text="${alumni.name}">John Doe</strong>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-info" th:text="${alumni.batch}">2020</span>
+                                    </td>
+                                    <td th:text="${alumni.company}">Tech Corp</td>
+                                    <td>
+                                        <a th:href="'mailto:' + ${alumni.contact}" 
+                                           th:text="${alumni.contact}" class="text-decoration-none">
+                                            john@example.com
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <a th:href="@{'/alumni/view/' + ${alumni.id}}" 
+                                               class="btn btn-sm btn-outline-info" title="View">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            <a th:href="@{'/alumni/edit/' + ${alumni.id}}" 
+                                               class="btn btn-sm btn-outline-warning" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a th:href="@{'/alumni/delete/' + ${alumni.id}}" 
+                                               class="btn btn-sm btn-outline-danger" 
+                                               title="Delete"
+                                               onclick="return confirm('Are you sure you want to delete this alumni?')">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <small class="text-muted">
+                            <i class="fas fa-info-circle me-1"></i>
+                            Total: <span th:text="${#lists.size(alumni)}">0</span> alumni
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
